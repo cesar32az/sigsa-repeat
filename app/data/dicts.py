@@ -15,4 +15,17 @@ pacientes = [
 
 dias = [1, 2, 3]
 
-  
+suple = [
+    {
+        "nombre": "ferro",
+        "presentacion": "tableta",
+        "concentracion": "300",
+        "cantidad": "12",
+    },
+    {
+        "nombre": "foli",
+        "presentacion": "tableta",
+        "concentracion": "5",
+        "cantidad": "12",
+    },
+]

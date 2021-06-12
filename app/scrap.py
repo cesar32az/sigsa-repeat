@@ -1,12 +1,13 @@
 import time
-
+from pathlib import Path
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
-from app.data.paciente import Paciente
+from app.clases.paciente import Paciente
+from app.data.dicts import suple
 
 # opciones de navegacion
 options = webdriver.ChromeOptions()
@@ -78,6 +79,8 @@ def cargar_pagina(user: str, password: str, responsable: str, mes: str):
 
 def buscar_paciente(dia: int, paciente: Paciente):
     try:
+        registros_dir = Path("registros")
+        registros_dir.mkdir(exist_ok=True)
         # input dia
         WebDriverWait(driver, 5).until(
             EC.element_to_be_clickable((By.ID, "ctl00_MainContent_TxtDia"))
@@ -180,15 +183,137 @@ def ingresar_paciente(cie: str, ingresar: bool):
         ).click()
         time.sleep(1)
         if ingresar:
-            """ GUARDAR """
+            """GUARDAR"""
             # aboton guardar ID ctl00_MainContent_LnkGrabarC
-            WebDriverWait(driver, 5).until(EC.visibility_of_element_located(
-                (By.ID, 'ctl00_MainContent_LnkGrabarC'))).click()
-            time.sleep(2) 
+            WebDriverWait(driver, 5).until(
+                EC.visibility_of_element_located(
+                    (By.ID, "ctl00_MainContent_LnkGrabarC")
+                )
+            ).click()
+            time.sleep(2)
 
         # recargar pagina para evitar errores
         driver.get(consulta_url)
         time.sleep(1)
 
+    except TimeoutException as e:
+        print(e)
+
+
+def agregar_medicamentos():
+
+    for medicamento in suple:
+        nombre = medicamento["nombre"]
+        presentacion = medicamento["presentacion"]
+        concentracion = medicamento["concentracion"]
+        cantidad = medicamento["cantidad"]
+        try:
+            # boton agregar medicamento ID ctl00_MainContent_lnkNuevoM
+            WebDriverWait(driver, 5).until(
+                EC.element_to_be_clickable((By.ID, "ctl00_MainContent_lnkNuevoM"))
+            ).click()
+            time.sleep(1)
+
+            # Buscar medicamento Id ctl00_MainContent_lnkBuscarM
+            WebDriverWait(driver, 5).until(
+                EC.element_to_be_clickable((By.ID, "ctl00_MainContent_lnkBuscarM"))
+            ).click()
+            time.sleep(2)
+
+            # input nombre medicamento ID ctl00_MainContent_TxtBusDescripcionM
+            WebDriverWait(driver, 5).until(
+                EC.element_to_be_clickable(
+                    (By.ID, "ctl00_MainContent_TxtBusDescripcionM")
+                )
+            ).send_keys(nombre)
+            time.sleep(1)
+
+            # input presentacion medicamento ID ctl00_MainContent_TxtBusPresentacionM
+            WebDriverWait(driver, 5).until(
+                EC.element_to_be_clickable(
+                    (By.ID, "ctl00_MainContent_TxtBusPresentacionM")
+                )
+            ).send_keys(presentacion)
+            time.sleep(1)
+
+            # input concentracion medicamento ID ctl00_MainContent_TxtBusConcentracionM
+            WebDriverWait(driver, 5).until(
+                EC.element_to_be_clickable(
+                    (By.ID, "ctl00_MainContent_TxtBusConcentracionM")
+                )
+            ).send_keys(concentracion)
+            time.sleep(1)
+
+            # boton filtrar medicamento ID ctl00_MainContent_lnkFiltrarM
+            WebDriverWait(driver, 5).until(
+                EC.element_to_be_clickable((By.ID, "ctl00_MainContent_lnkFiltrarM"))
+            ).click()
+            time.sleep(1)
+
+            # motivo encontrado classname dxgvDataRow_PlasticBlue
+            WebDriverWait(driver, 5).until(
+                EC.element_to_be_clickable(
+                    (By.XPATH, "//table[@id='ctl00_MainContent_GrdBuscaM']/tbody/tr[1]")
+                )
+            ).click()
+            time.sleep(2)
+
+            # input cantidad medicamento ID ctl00_MainContent_TxtCantidadM
+            WebDriverWait(driver, 5).until(
+                EC.element_to_be_clickable((By.ID, "ctl00_MainContent_TxtCantidadM"))
+            ).send_keys(cantidad)
+            time.sleep(1)
+
+            # boton guardar medicamento ID ctl00_MainContent_lnkGrabarM
+            WebDriverWait(driver, 5).until(
+                EC.element_to_be_clickable((By.ID, "ctl00_MainContent_lnkGrabarM"))
+            ).click()
+            time.sleep(2)
+        except TimeoutException as e:
+            print(f"error en el medicamento {nombre} ", e)
+        print(f"fin medicamento {nombre}")
+
+
+def suplementar(ingresar: bool):
+    try:
+        # boton agregar motivo de consulta ID ctl00_MainContent_lnkNuevoD
+        WebDriverWait(driver, 5).until(
+            EC.element_to_be_clickable((By.ID, "ctl00_MainContent_lnkNuevoD"))
+        ).click()
+        time.sleep(1)
+
+        # input cie 10 set keys ID ctl00_MainContent_TxtIdCie
+        WebDriverWait(driver, 5).until(
+            EC.element_to_be_clickable((By.ID, "ctl00_MainContent_TxtIdCie"))
+        ).send_keys("z:29:8")
+
+        # boton filtrar motivo ID ctl00_MainContent_lnkFiltrarD
+        WebDriverWait(driver, 5).until(
+            EC.element_to_be_clickable((By.ID, "ctl00_MainContent_lnkFiltrarD"))
+        ).click()
+        time.sleep(2)
+
+        # motivo encontrado classname dxgvDataRow_PlasticBlue
+        WebDriverWait(driver, 5).until(
+            EC.element_to_be_clickable(
+                (By.XPATH, "//table[@id='ctl00_MainContent_GrdBuscaD']/tbody/tr[1]")
+            )
+        ).click()
+        time.sleep(2)
+        agregar_medicamentos()
+
+        if ingresar:
+            """GUARDAR"""
+            # aboton guardar ID ctl00_MainContent_LnkGrabarC
+            WebDriverWait(driver, 5).until(
+                EC.visibility_of_element_located(
+                    (By.ID, "ctl00_MainContent_LnkGrabarC")
+                )
+            ).click()
+            time.sleep(2)
+
+        # recargar pagina para evitar errores
+        driver.get(consulta_url)
+        time.sleep(1)
     except TimeoutException as e:
         print(e)

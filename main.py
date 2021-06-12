@@ -1,8 +1,8 @@
 from time import time
 
+from app.clases.paciente import Paciente
 from app.data.dicts import dias, pacientes
-from app.data.paciente import Paciente
-from app.scrap import buscar_paciente, cargar_pagina, ingresar_paciente
+from app.scrap import buscar_paciente, cargar_pagina, ingresar_paciente, suplementar
 
 
 def main():
@@ -14,10 +14,11 @@ def main():
 
     for paciente in pacientes:
         paciente = Paciente(paciente)
-        for dia in range(1, 11): 
+        for dia in range(1, 2):
             print(f"Dia: {dia}, paciente: {paciente}")
             buscar_paciente(dia, paciente)
-            ingresar_paciente(cie="z:20:8", ingresar=False)
+            # ingresar_paciente(cie="z:20:8", ingresar=False)
+            suplementar(ingresar=False)
 
 
 if __name__ == "__main__":
