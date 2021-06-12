@@ -23,7 +23,7 @@ sigsa_url = "https://sacatepequez.mspas.gob.gt/Login.aspx?ReturnUrl=%2fdefault.a
 sigsa3_url = "https://sacatepequez.mspas.gob.gt/Sigsa3/default.aspx"
 
 
-def cargar_pagina(responsable:str, mes:str):
+def cargar_pagina(user: str, password: str, responsable: str, mes: str):
     try:
 
         # inicializar navegador
@@ -31,10 +31,10 @@ def cargar_pagina(responsable:str, mes:str):
 
         WebDriverWait(driver, 5).until(
             EC.element_to_be_clickable((By.ID, "Login1_UserName"))
-        ).send_keys("jrodriguez")
+        ).send_keys(user)
         WebDriverWait(driver, 5).until(
             EC.element_to_be_clickable((By.ID, "Login1_Password"))
-        ).send_keys("3124")
+        ).send_keys(password)
         WebDriverWait(driver, 5).until(
             EC.element_to_be_clickable((By.ID, "Login1_LoginButton"))
         ).click()
@@ -137,13 +137,13 @@ def buscar_paciente(dia: int, paciente: Paciente):
         time.sleep(1)
 
 
-def ingresar_paciente(cie: str):
+def ingresar_paciente(cie: str, ingresar: bool):
     try:
         # select tipo consulta ID ctl00_MainContent_cmbConsulta
         WebDriverWait(driver, 5).until(
             EC.element_to_be_clickable((By.ID, "ctl00_MainContent_cmbConsulta"))
         ).send_keys("2")
-
+        time.sleep(1)
         # boton agregar motivo de consulta ID ctl00_MainContent_lnkNuevoD
         WebDriverWait(driver, 5).until(
             EC.element_to_be_clickable((By.ID, "ctl00_MainContent_lnkNuevoD"))
@@ -154,7 +154,6 @@ def ingresar_paciente(cie: str):
         WebDriverWait(driver, 5).until(
             EC.element_to_be_clickable((By.ID, "ctl00_MainContent_TxtIdCie"))
         ).send_keys(cie)
-
         # boton filtrar motivo ID ctl00_MainContent_lnkFiltrarD
         WebDriverWait(driver, 5).until(
             EC.element_to_be_clickable((By.ID, "ctl00_MainContent_lnkFiltrarD"))
@@ -167,7 +166,7 @@ def ingresar_paciente(cie: str):
                 (By.XPATH, "//table[@id='ctl00_MainContent_GrdBuscaD']/tbody/tr[1]")
             )
         ).click()
-        time.sleep(1)
+        time.sleep(2)
 
         # boton agregar medicamento ID ctl00_MainContent_lnkNuevoM
         WebDriverWait(driver, 5).until(
@@ -180,12 +179,12 @@ def ingresar_paciente(cie: str):
             EC.visibility_of_element_located((By.ID, "ctl00_MainContent_Chk_noaplica"))
         ).click()
         time.sleep(1)
-
-        """ GUARDAR 
-        # aboton guardar ID ctl00_MainContent_LnkGrabarC
-        WebDriverWait(driver, 5).until(EC.visibility_of_element_located(
-            (By.ID, 'ctl00_MainContent_LnkGrabarC'))).click()
-        time.sleep(2) """
+        if ingresar:
+            """ GUARDAR """
+            # aboton guardar ID ctl00_MainContent_LnkGrabarC
+            WebDriverWait(driver, 5).until(EC.visibility_of_element_located(
+                (By.ID, 'ctl00_MainContent_LnkGrabarC'))).click()
+            time.sleep(2) 
 
         # recargar pagina para evitar errores
         driver.get(consulta_url)

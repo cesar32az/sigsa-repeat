@@ -6,16 +6,18 @@ from app.scrap import buscar_paciente, cargar_pagina, ingresar_paciente
 
 
 def main():
+    user = "jrodriguez"
+    password = "3124"
     responsable = "YESI CRISTINA BARRUTIA"
     mes = "6"
-    cargar_pagina(responsable, mes)
+    cargar_pagina(user, password, responsable, mes)
 
-    for item in pacientes:
-        paciente = Paciente(item)
-        for dia in range(1, 4): # for dia in range(1, 4):  1, 2, 3
+    for paciente in pacientes:
+        paciente = Paciente(paciente)
+        for dia in range(1, 11): 
             print(f"Dia: {dia}, paciente: {paciente}")
             buscar_paciente(dia, paciente)
-            ingresar_paciente(cie="z:20:8")
+            ingresar_paciente(cie="z:20:8", ingresar=False)
 
 
 if __name__ == "__main__":
