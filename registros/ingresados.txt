@@ -6,3 +6,6 @@ Dia: 1, paciente: julio cesar, rodriguez orozco
 Dia: 1, paciente: julio cesar, rodriguez orozco
 Dia: 2, paciente: julio cesar, rodriguez orozco
 Dia: 3, paciente: julio cesar, rodriguez orozco
+Dia: 1, paciente: julio cesar, rodriguez orozco
+Dia: 2, paciente: julio cesar, rodriguez orozco
+Dia: 3, paciente: julio cesar, rodriguez orozco

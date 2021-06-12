@@ -23,7 +23,7 @@ sigsa_url = "https://sacatepequez.mspas.gob.gt/Login.aspx?ReturnUrl=%2fdefault.a
 sigsa3_url = "https://sacatepequez.mspas.gob.gt/Sigsa3/default.aspx"
 
 
-def cargar_pagina():
+def cargar_pagina(responsable:str, mes:str):
     try:
 
         # inicializar navegador
@@ -44,7 +44,7 @@ def cargar_pagina():
         # filtro de personal
         WebDriverWait(driver, 5).until(
             EC.element_to_be_clickable((By.NAME, "ctl00$MainContent$TxtMes"))
-        ).send_keys("6")
+        ).send_keys(mes)
         WebDriverWait(driver, 5).until(
             EC.element_to_be_clickable((By.NAME, "ctl00$MainContent$TxtAno"))
         ).send_keys("2021")
@@ -54,7 +54,7 @@ def cargar_pagina():
         time.sleep(1)
         WebDriverWait(driver, 5).until(
             EC.element_to_be_clickable((By.ID, "ctl00_MainContent_cmb_Responsable"))
-        ).send_keys("YESI CRISTINA BARRUTIA")
+        ).send_keys(responsable)
         time.sleep(1)
         WebDriverWait(driver, 5).until(
             EC.element_to_be_clickable((By.ID, "ctl00_MainContent_lnkFiltrar"))
