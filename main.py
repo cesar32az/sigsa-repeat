@@ -17,8 +17,10 @@ def main():
         for dia in range(1, 2):
             print(f"Dia: {dia}, paciente: {paciente}")
             buscar_paciente(dia, paciente)
+            
+            """ Opcion a suplementar o ingresar solo un diagnostico """
             # ingresar_paciente(cie="z:20:8", ingresar=False)
-            suplementar(ingresar=False)
+            #suplementar(ingresar=False)
 
 
 if __name__ == "__main__":
