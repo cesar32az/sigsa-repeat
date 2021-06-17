@@ -1,0 +1,10 @@
+{
+  "pacientes": [
+    { "nombres": "isabel", "apellidos": "ortiz pablo", "cie": "u:07:4" },
+    {
+      "nombres": "carlos antonio",
+      "apellidos": "jacinto torres",
+      "cie": "u:07:4"
+    }
+  ]
+}

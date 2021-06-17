@@ -82,11 +82,11 @@ def buscar_paciente(dia: int, paciente: Paciente):
         registros_dir = Path("registros")
         registros_dir.mkdir(exist_ok=True)
         # input dia
-        WebDriverWait(driver, 5).until(
+        WebDriverWait(driver, 15).until(
             EC.element_to_be_clickable((By.ID, "ctl00_MainContent_TxtDia"))
         ).send_keys(dia)
         # boton buscar persona
-        WebDriverWait(driver, 5).until(
+        WebDriverWait(driver, 15).until(
             EC.element_to_be_clickable((By.ID, "ctl00_MainContent_lnkBuscarP"))
         ).click()
         time.sleep(1)
@@ -111,9 +111,9 @@ def buscar_paciente(dia: int, paciente: Paciente):
         WebDriverWait(driver, 5).until(
             EC.element_to_be_clickable((By.ID, "ctl00_MainContent_lnkFiltrarP"))
         ).click()
-        time.sleep(2)
+        time.sleep(3)
         # primer resultado dxgvDataRow_PlasticBlue
-        WebDriverWait(driver, 5).until(
+        WebDriverWait(driver, 15).until(
             EC.element_to_be_clickable((By.CLASS_NAME, "dxgvDataRow_PlasticBlue"))
         ).click()
 
@@ -151,7 +151,7 @@ def ingresar_paciente(cie: str, ingresar: bool):
         WebDriverWait(driver, 5).until(
             EC.element_to_be_clickable((By.ID, "ctl00_MainContent_lnkNuevoD"))
         ).click()
-        time.sleep(1)
+        time.sleep(2)
 
         # input cie 10 set keys ID ctl00_MainContent_TxtIdCie
         WebDriverWait(driver, 5).until(
@@ -181,7 +181,7 @@ def ingresar_paciente(cie: str, ingresar: bool):
         WebDriverWait(driver, 5).until(
             EC.visibility_of_element_located((By.ID, "ctl00_MainContent_Chk_noaplica"))
         ).click()
-        time.sleep(1)
+        time.sleep(2)
         if ingresar:
             """GUARDAR"""
             # aboton guardar ID ctl00_MainContent_LnkGrabarC

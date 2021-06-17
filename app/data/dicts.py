@@ -1,19 +1,11 @@
-pacientes = [
-    {
-        "primer_nombre": "julio",
-        "segundo_nombre": "cesar",
-        "primer_apellido": "rodriguez",
-        "segundo_apellido": "orozco",
-    },
-    {
-        "primer_nombre": "jorge",
-        "segundo_nombre": "",
-        "primer_apellido": "gomez",
-        "segundo_apellido": "",
-    },
-]
+import json
 
-dias = [1, 2, 3]
+f = open("app/data/pacientes.json", )
+data = json.load(f)
+f.close()
+pacientes = data["pacientes"]
+
+dias = [1, 2, 3, 4, 7, 8, 9, 10, 11, 12]
 
 suple = [
     {

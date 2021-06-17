@@ -11,16 +11,18 @@ def main():
     responsable = "YESI CRISTINA BARRUTIA"
     mes = "6"
     cargar_pagina(user, password, responsable, mes)
-
+    pacientes_ingresados = 0
     for paciente in pacientes:
         paciente = Paciente(paciente)
-        for dia in range(1, 2):
+        for dia in dias: # dias   -    range(1, 3) -> 1, 2
             print(f"Dia: {dia}, paciente: {paciente}")
             buscar_paciente(dia, paciente)
             
             """ Opcion a suplementar o ingresar solo un diagnostico """
-            # ingresar_paciente(cie="z:20:8", ingresar=False)
+            #ingresar_paciente(cie=paciente.cie, ingresar=True)
             #suplementar(ingresar=False)
+            pacientes_ingresados+=1
+    print(f"Pacientes ingresados: {pacientes_ingresados}")
 
 
 if __name__ == "__main__":
